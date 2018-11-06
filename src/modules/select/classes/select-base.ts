@@ -302,6 +302,10 @@ export abstract class SuiSelectBase<T, U> implements AfterContentInit, OnDestroy
         this._renderedSubscriptions.forEach(rs => rs.unsubscribe());
         this._renderedSubscriptions = [];
 
+        if (!this._renderedOptions) {
+            return;
+        }
+
         this._renderedOptions.forEach(ro => {
             // Slightly delay initialisation to avoid change after checked errors. TODO - look into avoiding this!
             setTimeout(() => this.initialiseRenderedOption(ro));

@@ -157,6 +157,8 @@ export class SuiMultiSelect<T, U> extends SuiSelectBase<T, U> implements ICustom
                 .map(v => this.findOption(this.searchService.options, v)!)
                 .filter(v => v != undefined);
 
+            this.onSelectedOptionsChange();
+
             if (this.selectedOptions.length === this._writtenOptions.length) {
                 this._writtenOptions = undefined;
             }
@@ -176,16 +178,12 @@ export class SuiMultiSelect<T, U> extends SuiSelectBase<T, U> implements ICustom
             return;
         }
         this.selectedOptions.push(option);
-        this.selectedOptionsChange.emit(this.selectedOptions.map(o => this.valueGetter(o)));
+        this.onSelectedOptionsChange();
 
         this.resetQuery(false);
 
         // Automatically refocus the search input for better keyboard accessibility.
         this.focus();
-
-        if (!this.hasLabels) {
-            this.onAvailableOptionsRendered();
-        }
     }
 
     public writeValue(values:U[]):void {
@@ -196,13 +194,17 @@ export class SuiMultiSelect<T, U> extends SuiSelectBase<T, U> implements ICustom
                     // non-null assertion added here because Typescript doesn't recognise the non-null filter.
                     .map(v => this.findOption(this.searchService.options, v)!)
                     .filter(v => v != undefined);
+                this.onSelectedOptionsChange();
             }
             if (values.length > 0 && this.selectedOptions.length === 0) {
                 if (this.valueField && this.searchService.hasItemLookup) {
                     // If the search service has a selected lookup function, make use of that to load the initial values.
                     this.searchService
                         .initialLookup(values)
-                        .then(items => this.selectedOptions = items);
+                        .then(items => {
+                            this.selectedOptions = items;
+                            this.onSelectedOptionsChange();
+                        });
                 } else {
                     // Otherwise, cache the written value for when options are set.
                     this._writtenOptions = values;
@@ -216,17 +218,20 @@ export class SuiMultiSelect<T, U> extends SuiSelectBase<T, U> implements ICustom
         }
     }
 
-    public deselectOption(option:T):void {
-        // Update selected options to the previously selected options \ {option}.
-        this.selectedOptions = this.selectedOptions.filter(so => so !== option);
+    private onSelectedOptionsChange():void {
         this.selectedOptionsChange.emit(this.selectedOptions.map(o => this.valueGetter(o)));
-
-        // Automatically refocus the search input for better keyboard accessibility.
-        this.focus();
-
         if (!this.hasLabels) {
             this.onAvailableOptionsRendered();
         }
+    }
+
+    public deselectOption(option:T):void {
+        // Update selected options to the previously selected options \ {option}.
+        this.selectedOptions = this.selectedOptions.filter(so => so !== option);
+        this.onSelectedOptionsChange();
+
+        // Automatically refocus the search input for better keyboard accessibility.
+        this.focus();
     }
 
     public onQueryInputKeydown(event:KeyboardEvent):void {
