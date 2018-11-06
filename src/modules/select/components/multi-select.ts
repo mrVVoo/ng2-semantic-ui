@@ -214,6 +214,11 @@ export class SuiMultiSelect<T, U> extends SuiSelectBase<T, U> implements ICustom
         } else {
             this.selectedOptions = [];
         }
+
+        this.selectedOptionsChange.emit(this.selectedOptions.map(o => this.valueGetter(o)));
+        if (!this.hasLabels) {
+            this.onAvailableOptionsRendered();
+        }
     }
 
     public deselectOption(option:T):void {
