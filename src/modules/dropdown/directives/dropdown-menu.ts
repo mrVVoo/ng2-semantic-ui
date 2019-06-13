@@ -161,7 +161,9 @@ export class SuiDropdownMenu extends SuiTransition implements AfterContentInit, 
 
             if (this._service.autoCloseMode === DropdownAutoCloseType.ItemClick) {
                 const target = e.target as IAugmentedElement;
-                if (this._element.nativeElement.contains(target.closest(".item")) && !/input|textarea/i.test(target.tagName)) {
+                // This breaks when items are generated dynamically, because nativeElement contains the raw DOM node
+                const doesThisMenuContainTheClickedItem = this._element.nativeElement.contains(target.closest(".item"));
+                if (doesThisMenuContainTheClickedItem && !/input|textarea/i.test(target.tagName)) {
                     // Once an item is selected, we can close the entire dropdown.
                     this._service.setOpenState(false, true);
                 }
