@@ -4,7 +4,7 @@ import { ICustomValueAccessorHost, customValueAccessorFactory, CustomValueAccess
 @Component({
     selector: "sui-rating",
     template: `
-<i class="icon"
+<i class="{{ iconType }} icon"
    *ngFor="let icon of icons; let i = index"
    (mouseover)="onMouseover(i)"
    (click)="onClick(i)"
@@ -42,6 +42,9 @@ export class SuiRating implements ICustomValueAccessorHost<number> {
     @HostBinding("class.read-only")
     @Input()
     public isReadonly:boolean;
+
+    @Input()
+    public iconType:string;
 
     public get icons():undefined[] {
         // tslint:disable-next-line:prefer-literal
