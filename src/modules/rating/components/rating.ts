@@ -28,6 +28,9 @@ export class SuiRating implements ICustomValueAccessorHost<number> {
     @Output()
     public valueChange:EventEmitter<number>;
 
+    @Output()
+    public valueHover:EventEmitter<number>;
+
     private _maximum:number;
 
     @Input()
@@ -56,6 +59,7 @@ export class SuiRating implements ICustomValueAccessorHost<number> {
     constructor() {
         this.value = 0;
         this.valueChange = new EventEmitter<number>();
+        this.valueHover = new EventEmitter<number>();
 
         this.maximum = 5;
         this.isReadonly = false;
@@ -72,11 +76,13 @@ export class SuiRating implements ICustomValueAccessorHost<number> {
 
     public onMouseover(i:number):void {
         this.hoveredIndex = i;
+        this.valueHover.emit(this.hoveredIndex);
     }
 
     @HostListener("mouseout")
     public onMouseout():void {
         this.hoveredIndex = -1;
+        this.valueHover.emit(this.hoveredIndex);
     }
 
     public writeValue(value:number):void {
