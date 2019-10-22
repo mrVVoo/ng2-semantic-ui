@@ -4,13 +4,17 @@ import { ICustomValueAccessorHost, customValueAccessorFactory, CustomValueAccess
 @Component({
     selector: "sui-rating",
     template: `
-<i class="{{ iconType }} icon"
-   *ngFor="let icon of icons; let i = index"
-   (mouseover)="onMouseover(i)"
-   (click)="onClick(i)"
-   [class.selected]="hoveredIndex >= i && !isReadonly"
-   [class.active]="value > i">
-</i>
+<span 
+    *ngFor="let icon of icons; let i = index"
+    [attr.data-position]="getLabelPosition(i)"
+    [attr.data-tooltip]="getLabel(i)">
+    <i class="{{ iconType }} icon"
+       (mouseover)="onMouseover(i)"
+       (click)="onClick(i)"
+       [class.selected]="hoveredIndex >= i && !isReadonly"
+       [class.active]="value > i"
+    ></i>
+</span>
 `,
     styles: [`
 :host.read-only .icon {
@@ -49,6 +53,12 @@ export class SuiRating implements ICustomValueAccessorHost<number> {
     @Input()
     public iconType:string;
 
+    @Input()
+    public labels:string[] = [];
+
+    @Input()
+    public labelPosition:string = "top center";
+
     public get icons():undefined[] {
         // tslint:disable-next-line:prefer-literal
         return new Array(this.maximum);
@@ -77,6 +87,18 @@ export class SuiRating implements ICustomValueAccessorHost<number> {
     public onMouseover(i:number):void {
         this.hoveredIndex = i;
         this.valueHover.emit(this.hoveredIndex);
+    }
+
+    public getLabelPosition(i:number):string|undefined {
+        return this.hasLabel(i) ? this.labelPosition : undefined;
+    }
+
+    public hasLabel(i:number):boolean {
+        return !!this.getLabel(i);
+    }
+
+    public getLabel(i:number):string {
+        return this.labels[i];
     }
 
     @HostListener("mouseout")
