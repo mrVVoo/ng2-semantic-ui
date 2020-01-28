@@ -15,7 +15,7 @@ import { ModalConfig, ModalSize } from "../classes/modal-config";
                   [class.inverted]="isInverted"
                   [(isDimmed)]="dimBackground"
                   [transitionDuration]="transitionDuration"
-                  (click)="close()">
+                  (click)="closeOnOutsideClick()">
 
     <!-- Modal component, with transition component attached -->
     <div class="ui modal"
@@ -44,6 +44,10 @@ export class SuiModal<T, U> implements OnInit, AfterViewInit {
     @Input()
     // Determines whether the modal can be closed with a close button, clicking outside, or the escape key.
     public isClosable:boolean;
+
+    @Input()
+    // Determines whether the modal can be closed by an outside click
+    public isClosableOnOutsideClick:boolean;
 
     @Input()
     // Value to deny with when closing via `isClosable`.
@@ -211,6 +215,7 @@ export class SuiModal<T, U> implements OnInit, AfterViewInit {
     // Updates the modal with the specified configuration.
     public loadConfig<V>(config:ModalConfig<V, T, U>):void {
         this.isClosable = config.isClosable;
+        this.isClosableOnOutsideClick = config.isClosableOnOutsideClick;
         this.closeResult = config.closeResult;
 
         this.size = config.size;
@@ -249,6 +254,14 @@ export class SuiModal<T, U> implements OnInit, AfterViewInit {
     // Closes the modal with a 'deny' outcome, using the specified default reason.
     public close():void {
         if (this.isClosable) {
+            // If we are allowed to close, fire the deny result with the default value.
+            this.deny(this.closeResult);
+        }
+    }
+
+    // Closes the modal with a 'deny' outcome, using the specified default reason.
+    public closeOnOutsideClick():void {
+        if (this.isClosable && this.isClosableOnOutsideClick) {
             // If we are allowed to close, fire the deny result with the default value.
             this.deny(this.closeResult);
         }

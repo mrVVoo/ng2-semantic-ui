@@ -15,6 +15,10 @@ export const ModalSize = {
 export class ModalConfig<T, U = undefined, V = undefined> {
     // Determines whether the modal can be closed with a close button, clicking outside, or the escape key.
     public isClosable:boolean;
+
+    // Determines whether the modal can be closed by an outside click
+    public isClosableOnOutsideClick:boolean;
+
     // Value to deny with when closing via `isClosable`.
     public closeResult:V;
 
@@ -43,6 +47,7 @@ export class ModalConfig<T, U = undefined, V = undefined> {
     constructor(context:T | undefined = undefined, isClosable:boolean = true) {
         // Initialise with default values.
         this.isClosable = isClosable;
+        this.isClosableOnOutsideClick = true;
         this.context = context;
 
         this.size = ModalSize.Normal;
