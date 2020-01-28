@@ -98,6 +98,10 @@ To run the unit tests suite:
 $ npm run test
 ```
 
+## Publishing
+
+    rm -rf dist; npm run build:prod; cd dist; npm publish --access public
+
 ## License
 
 MIT © [Edward Carroll](https://github.com/edcarroll)
