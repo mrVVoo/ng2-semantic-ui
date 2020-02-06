@@ -12,7 +12,7 @@ import { SuiDropdownMenu } from "./dropdown-menu";
 export class SuiDropdown implements AfterContentInit {
     public service:DropdownService;
 
-    @ContentChild(SuiDropdownMenu)
+    @ContentChild(SuiDropdownMenu, { static: false })
     private _menu:SuiDropdownMenu;
 
     @ContentChildren(SuiDropdown, { descendants: true })
