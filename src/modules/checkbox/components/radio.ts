@@ -112,7 +112,7 @@ export class SuiRadio<T> implements ICustomValueAccessorHost<T> {
 @Directive({
     selector: "sui-radio-button",
     host: {
-        "(currentValueChange)": "onChange($event)",
+        "(currentValueChange)": "onChange()",
         "(touched)": "onTouched()"
     },
     providers: [customValueAccessorFactory(SuiRadioValueAccessor)]

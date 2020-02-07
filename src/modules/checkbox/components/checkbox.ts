@@ -101,7 +101,7 @@ export class SuiCheckbox implements ICustomValueAccessorHost<boolean> {
 @Directive({
     selector: "sui-checkbox",
     host: {
-        "(checkChange)": "onChange($event)",
+        "(checkChange)": "onChange()",
         "(touched)": "onTouched()"
     },
     providers: [customValueAccessorFactory(SuiCheckboxValueAccessor)]
