@@ -18,10 +18,10 @@ export class SuiSidebarContainer implements AfterContentInit {
     @HostBinding("class.pushable")
     public readonly hasClasses:boolean;
 
-    @ContentChild(SuiSidebar, {static: false})
+    @ContentChild(SuiSidebar, { static: false })
     public sidebar:SuiSidebar;
 
-    @ContentChild(SuiSidebarSibling, {static: false})
+    @ContentChild(SuiSidebarSibling, { static: false })
     public sibling:SuiSidebarSibling;
 
     constructor() {
