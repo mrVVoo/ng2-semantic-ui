@@ -20,9 +20,12 @@
       "dom"
     ],
     "paths": {
-      "ng2-semantic-ui": ["dist"],
-      "ng2-semantic-ui/locales": ["dist/locales"],
-      "ng2-semantic-ui/*": ["dist/*"],
+        "ng2-semantic-ui": ["dist"],
+        "ng2-semantic-ui/locales": ["dist/locales"],
+        "ng2-semantic-ui/*": ["dist/*"],
+        "@hochzehn/ng2-semantic-ui": ["dist"],
+        "@hochzehn/ng2-semantic-ui/locales": ["dist/locales"],
+        "@hochzehn/ng2-semantic-ui/*": ["dist/*"]
     }
   }
 }

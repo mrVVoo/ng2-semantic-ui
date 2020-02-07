@@ -29,10 +29,10 @@ import { SuiSelectOption } from "./select-option";
 <div class="text"
      [class.default]="hasLabels"
      [class.filtered]="!!query && !isSearchExternal">
-    
+
     <!-- Placeholder text -->
     <ng-container *ngIf="hasLabels; else selectedBlock">{{ placeholder }}</ng-container>
-    
+
     <!-- Summary shown when labels are hidden -->
     <ng-template #selectedBlock> {{ selectedMessage }}</ng-template>
 </div>
@@ -246,7 +246,7 @@ export class SuiMultiSelect<T, U> extends SuiSelectBase<T, U> implements ICustom
 @Directive({
     selector: "sui-multi-select",
     host: {
-        "(selectedOptionsChange)": "onChange($event)",
+        "(selectedOptionsChange)": "onChange()",
         "(touched)": "onTouched()"
     },
     providers: [customValueAccessorFactory(SuiMultiSelectValueAccessor)]

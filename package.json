@@ -1,6 +1,6 @@
 {
   "name": "@hochzehn/ng2-semantic-ui",
-  "version": "0.10.0-alpha.6.11",
+  "version": "0.10.0-alpha.6.12",
   "description": "Angular Semantic UI Components",
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "lib:compile:prod": "ng build lib --prod && npm run lib:compile:locales",
     "lib:build": "npm run lib:lint && npm run lib:compile",
     "lib:build:prod": "npm run lib:lint && npm run lib:compile:prod",
+    "prepare": "npm run lib:build:prod",
     "demo:serve": "ng serve demo --host 0.0.0.0",
     "demo:lint": "ng lint demo",
     "demo:compile": "ng build demo",

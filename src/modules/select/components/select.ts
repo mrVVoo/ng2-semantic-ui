@@ -150,7 +150,7 @@ export class SuiSelect<T, U> extends SuiSelectBase<T, U> implements ICustomValue
 @Directive({
     selector: "sui-select",
     host: {
-        "(selectedOptionChange)": "onChange($event)",
+        "(selectedOptionChange)": "onChange()",
         "(touched)": "onTouched()"
     },
     providers: [customValueAccessorFactory(SuiSelectValueAccessor)]
